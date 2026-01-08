@@ -36,7 +36,19 @@
             transition: width 0.1s linear;
         }
 
-        .shape { opacity: 0.3; font-size: 1.2rem; }
+        .shape { 
+            font-size: 1.6rem; 
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fa-caret-up {
+            transform: scale(1.5);
+            display: inline-block;
+            line-height: 1;
+        }
 
         .modal-enter {
             animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -77,11 +89,20 @@
             backdrop-filter: blur(5px);
             transition: all 0.3s;
         }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #46178f;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-animate">
 
-    <!-- Audio Elements -->
     <audio id="audio-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
     <audio id="audio-wrong" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
     <audio id="audio-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
@@ -94,43 +115,57 @@
     <!-- Pantalla de Inicio -->
     <div id="start-screen" class="flex-grow flex flex-col items-center justify-center p-6 text-center">
         <div class="bg-white p-8 rounded-3xl text-center shadow-2xl max-w-md w-full text-slate-800">
-            <h1 class="text-3xl font-black mb-4 text-[#46178f]">Vida de San Josemaría</h1>
+            <img src="https://www.es.catholic.net/catholic_db/imagenes_db/escritores_actuales/SanJosemaria.jpg" 
+                 alt="San Josemaría Escrivá" 
+                 class="profile-img">
+            
+            <h1 class="text-3xl font-black mb-2 text-[#46178f]">Vida de San Josemaría</h1>
             <p class="text-lg mb-6 font-medium text-slate-600">"Todos podemos ser santos"</p>
+            
             <button onclick="startGame()" class="w-full bg-[#26890c] hover:bg-[#1f6d0a] text-white font-bold py-4 rounded-xl text-xl transition-all shadow-lg">
                 ¡EMPEZAR!
             </button>
-            <p class="text-xs mt-4 text-slate-400 italic">por Gabriel Bailly-Bailliere Torres-Pardo</p>
+            
+            <div class="mt-8 pt-6 border-t border-slate-100">
+                <p class="text-[10px] text-slate-400 leading-relaxed uppercase tracking-wider font-bold mb-2">
+                    Juego diseñado para celebrar el aniversario de su nacimiento (9 de enero)
+                </p>
+                <div class="text-[11px] text-slate-500 font-medium">
+                    Autor: Gabriel Bailly-Bailliere Torres-Pardo<br>
+                    <a href="mailto:gabriel.bailly@gmail.com" class="text-[#1368ce] hover:underline">gabriel.bailly@gmail.com</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Pantalla de Juego -->
     <div id="game-screen" class="hidden flex-grow flex flex-col">
         <div class="bg-white text-slate-800 p-4 flex justify-between items-center shadow-md">
-            <div class="font-bold text-xl">Pregunta <span id="current-q-num">1</span>/<span id="total-q-num"></span></div>
+            <div class="font-bold text-xl text-[#46178f]">Pregunta <span id="current-q-num">1</span>/15</div>
             <div class="bg-slate-200 w-32 h-4 rounded-full overflow-hidden">
                 <div id="timer-bar" class="progress-bar h-full bg-[#1368ce]" style="width: 100%"></div>
             </div>
-            <div class="font-bold text-xl">Puntos: <span id="score">0</span></div>
+            <div class="font-bold text-xl text-[#46178f]">Puntos: <span id="score">0</span></div>
         </div>
 
         <div class="flex-grow flex flex-col items-center justify-center p-6 text-center">
             <h2 id="question-text" class="text-3xl md:text-4xl font-black mb-8 drop-shadow-lg"></h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-5xl">
-                <button onclick="checkAnswer(0)" class="kahoot-btn option-0 p-6 rounded-lg text-left flex items-center min-h-[100px] text-xl font-bold">
-                    <span class="shape mr-4"><i class="fas fa-triangle"></i></span>
+                <button onclick="checkAnswer(0)" class="kahoot-btn option-0 p-6 rounded-lg text-left flex items-center min-h-[110px] text-xl font-bold">
+                    <span class="shape mr-4"><i class="fas fa-caret-up text-white"></i></span>
                     <span id="opt-0"></span>
                 </button>
-                <button onclick="checkAnswer(1)" class="kahoot-btn option-1 p-6 rounded-lg text-left flex items-center min-h-[100px] text-xl font-bold">
-                    <span class="shape mr-4"><i class="fas fa-square"></i></span>
+                <button onclick="checkAnswer(1)" class="kahoot-btn option-1 p-6 rounded-lg text-left flex items-center min-h-[110px] text-xl font-bold">
+                    <span class="shape mr-4"><i class="fas fa-diamond text-white"></i></span>
                     <span id="opt-1"></span>
                 </button>
-                <button onclick="checkAnswer(2)" class="kahoot-btn option-2 p-6 rounded-lg text-left flex items-center min-h-[100px] text-xl font-bold">
-                    <span class="shape mr-4"><i class="fas fa-circle"></i></span>
+                <button onclick="checkAnswer(2)" class="kahoot-btn option-2 p-6 rounded-lg text-left flex items-center min-h-[110px] text-xl font-bold">
+                    <span class="shape mr-4"><i class="fas fa-circle text-white"></i></span>
                     <span id="opt-2"></span>
                 </button>
-                <button onclick="checkAnswer(3)" class="kahoot-btn option-3 p-6 rounded-lg text-left flex items-center min-h-[100px] text-xl font-bold">
-                    <span class="shape mr-4"><i class="fas fa-rhombus"></i></span>
+                <button onclick="checkAnswer(3)" class="kahoot-btn option-3 p-6 rounded-lg text-left flex items-center min-h-[110px] text-xl font-bold">
+                    <span class="shape mr-4"><i class="fas fa-square text-white"></i></span>
                     <span id="opt-3"></span>
                 </button>
             </div>
@@ -149,9 +184,9 @@
 
     <!-- Pantalla Final -->
     <div id="end-screen" class="hidden flex-grow flex flex-col items-center justify-center p-6 text-center">
-        <h1 class="text-5xl font-black mb-8">¡Felicidades!</h1>
+        <h1 class="text-5xl font-black mb-8">¡Excelente!</h1>
         <div class="bg-white p-8 rounded-3xl shadow-2xl text-slate-800 max-w-md w-full">
-            <p class="text-2xl mb-2">Puntuación Final:</p>
+            <p class="text-2xl mb-2">Has obtenido:</p>
             <div class="text-6xl font-black text-[#46178f] mb-6" id="final-score">0</div>
             <p id="rank-message" class="text-lg font-medium mb-6 italic"></p>
             <button onclick="location.reload()" class="w-full bg-[#e21b3c] text-white font-bold py-4 rounded-xl text-xl shadow-lg">Volver a Jugar</button>
@@ -159,24 +194,27 @@
     </div>
 
     <script>
-        const questions = [
+        // Preguntas CRONOLÓGICAS (15 preguntas)
+        const cronoQuestions = [
             { q: "¿En qué año nació San Josemaría?", options: ["1902", "1928", "1898", "1910"], correct: 0 },
-            { q: "¿En qué ciudad nació?", options: ["Madrid", "Barbastro", "Zaragoza", "Logroño"], correct: 1 },
-            { q: "¿Cómo se llama la madre de San Josemaría?", options: ["María", "Dolores", "Carmen", "Josefa"], correct: 1 },
-            { q: "¿Cómo se llama su hermano pequeño?", options: ["Santiago", "Juan", "Luis", "Francisco"], correct: 0 },
-            { q: "¿A quién daba catequesis San Josemaría en Madrid?", options: ["A universitarios", "A niños pobres", "A sacerdotes", "A militares"], correct: 1 },
-            { q: "¿Dónde se escondía de niño cuando venían visitas a casa?", options: ["Bajo la cama", "Detrás del sofá", "Detrás de las cortinas", "En el armario"], correct: 2 },
-            { q: "¿Qué profesión eligió San Josemaría a los 15 años?", options: ["Abogado", "Médico", "Sacerdote", "Arquitecto"], correct: 2 },
-            { q: "¿En qué lugar celebró su primera misa?", options: ["En Barbastro", "En el Pilar de Zaragoza", "En Madrid", "En Roma"], correct: 1 },
-            { q: "¿En qué fecha recibió la iluminación de fundar la Obra?", options: ["2 de octubre", "14 de febrero", "26 de junio", "9 de enero"], correct: 0 },
-            { q: "¿Qué Papá le declaró santo?", options: ["Juan XXIII", "Pablo VI", "Juan Pablo II", "Benedicto XVI"], correct: 2 },
-            { q: "¿En qué año fue canonizado?", options: ["1975", "2002", "1992", "2010"], correct: 1 },
-            { q: "¿Cuál es la vocación que le mostró Dios?", options: ["Vivir solo", "Ser santo en el trabajo", "Hacer milagros", "Ir de misiones"], correct: 1 },
+            { q: "¿En qué ciudad nació?", options: ["Barbastro", "Madrid", "Zaragoza", "Logroño"], correct: 0 },
+            { q: "¿Cómo se llamaban sus padres?", options: ["José y Dolores", "Juan y María", "Francisco y Carmen", "Santiago y Josefa"], correct: 0 },
             { q: "¿A dónde le llevó su madre para agradecer su curación de niño?", options: ["Torreciudad", "El Pilar", "Fátima", "Lourdes"], correct: 0 },
-            { q: "¿Qué significa ser buen cristiano según su mensaje?", options: ["Ir solo a misa", "Hacer las cosas por amor a Dios", "Ser muy serio", "Saber mucha teología"], correct: 1 },
-            { q: "¿Dónde descansan actualmente sus restos?", options: ["Basílica de San Pedro", "Santa María de la Paz (Roma)", "Catedral de Madrid", "Zaragoza"], correct: 1 }
+            { q: "¿Cómo se llama su hermano pequeño?", options: ["Santiago", "Juan", "Luis", "Francisco"], correct: 0 },
+            { q: "¿Qué vio en Logroño que le hizo pensar que Dios quería algo de él?", options: ["Unas huellas en la nieve", "Una luz en la iglesia", "Un mendigo pidiendo", "Una visión de ángeles"], correct: 0 },
+            { q: "¿En qué lugar celebró su primera misa?", options: ["En el Pilar de Zaragoza", "En Barbastro", "En Madrid", "En Roma"], correct: 0 },
+            { q: "¿En qué fecha recibió la iluminación de fundar la Obra?", options: ["2 de octubre", "14 de febrero", "26 de junio", "9 de enero"], correct: 0 },
+            { q: "¿A quién daba catequesis San Josemaría en sus primeros años en Madrid?", options: ["A niños pobres", "A universitarios", "A sacerdotes", "A militares"], correct: 0 },
+            { q: "¿En qué fecha falleció en Roma?", options: ["26 de junio de 1975", "2 de octubre de 1928", "9 de enero de 1902", "14 de febrero de 1930"], correct: 0 },
+            { q: "¿Dónde descansan actualmente sus restos?", options: ["Santa María de la Paz (Roma)", "Catedral de la Almudena", "Basílica de San Pedro", "Catedral de Zaragoza"], correct: 0 },
+            { q: "¿Qué Papa le declaró santo?", options: ["Juan Pablo II", "Juan XXIII", "Pablo VI", "Benedicto XVI"], correct: 0 },
+            { q: "¿En qué año fue canonizado?", options: ["2002", "1975", "1992", "2010"], correct: 0 },
+            // Preguntas de Carisma al final
+            { q: "¿Cuál es el núcleo del carisma del Opus Dei?", options: ["Santidad en medio del mundo", "Vivir en un convento", "Hacer solo oración oral", "Irse de misiones lejos"], correct: 0 },
+            { q: "¿Qué significa ser buen cristiano según su mensaje?", options: ["Hacer las cosas por amor a Dios", "Ir solo a misa", "Ser muy serio", "Saber mucha teología"], correct: 0 }
         ];
 
+        let questions = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let timeLeft = 20;
@@ -184,24 +222,30 @@
         let canAnswer = true;
         let musicPlaying = false;
 
-        document.getElementById('total-q-num').innerText = questions.length;
+        function shuffleOptions(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function prepareQuestions() {
+            const newQuestions = JSON.parse(JSON.stringify(cronoQuestions));
+            newQuestions.forEach(item => {
+                const correctAnswerText = item.options[item.correct];
+                shuffleOptions(item.options);
+                item.correct = item.options.indexOf(correctAnswerText);
+            });
+            return newQuestions;
+        }
 
         function playShortSound(id) {
             const sound = document.getElementById(id);
             if (sound) {
                 sound.currentTime = 0;
                 sound.play().catch(() => {});
-                setTimeout(() => {
-                    sound.pause();
-                    sound.currentTime = 0;
-                }, 400); // Duración ultra-breve
             }
-        }
-
-        function playClick() {
-            const sound = document.getElementById('audio-click');
-            sound.currentTime = 0;
-            sound.play().catch(() => {});
         }
 
         function toggleMusic() {
@@ -218,7 +262,8 @@
         }
 
         function startGame() {
-            playClick();
+            playShortSound('audio-click');
+            questions = prepareQuestions();
             const bgAudio = document.getElementById('audio-bg');
             bgAudio.volume = 0.3;
             bgAudio.play().then(() => {
@@ -282,7 +327,7 @@
                 feedbackIcon.innerHTML = '❌';
                 feedbackTitle.innerText = index === -1 ? "¡Tiempo!" : "¡Incorrecto!";
                 feedbackTitle.className = "text-3xl font-black mb-2 text-red-600";
-                feedbackPoints.innerText = "Era: " + questions[currentQuestionIndex].options[correct];
+                feedbackPoints.innerText = "Sigue intentándolo.";
             }
 
             document.getElementById('score').innerText = score;
@@ -290,7 +335,7 @@
         }
 
         function nextQuestion() {
-            playClick();
+            playShortSound('audio-click');
             document.getElementById('feedback-modal').classList.add('hidden');
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
@@ -306,10 +351,10 @@
             document.getElementById('final-score').innerText = score;
             
             let msg = "";
-            const maxScore = questions.length * 1000;
-            if (score > maxScore * 0.8) msg = "¡Increíble! Eres un experto total.";
-            else if (score > maxScore * 0.5) msg = "¡Muy bien! Conoces muy bien su vida.";
-            else msg = "¡Buen trabajo! Sigue aprendiendo sobre el Padre.";
+            const maxPoints = questions.length * 1000;
+            if (score > maxPoints * 0.8) msg = "¡Excelente! Has recorrido su vida perfectamente.";
+            else if (score > maxPoints * 0.5) msg = "¡Muy bien! Conoces bien la historia del Padre.";
+            else msg = "¡Sigue aprendiendo! Fue una vida apasionante.";
             
             document.getElementById('rank-message').innerText = msg;
         }
